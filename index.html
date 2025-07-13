@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Canva Embed PWA</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#ffffff"/>
+</head>
+<body>
+  <main>
+    <div class="embed-container">
+      <iframe
+        id="canvaFrame"
+        loading="lazy"
+        src=""
+        allowfullscreen
+        allow="fullscreen"
+      ></iframe>
+    </div>
+    <p>
+      <a href="https://www.canva.com/design/DAGssLKY3ks/g5BoDWghGhK4JKXKoeYI7g/view?utm_content=DAGssLKY3ks&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
+         target="_blank" rel="noopener">
+      </a>
+    </p>
+  </main>
+  <script>
+    // Dynamically set iframe src after DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      const iframe = document.getElementById('canvaFrame');
+      iframe.src = "https://www.canva.com/design/DAGssLKY3ks/g5BoDWghGhK4JKXKoeYI7g/view?embed";
+    });
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(reg => console.log('✅ Service Worker registered!', reg.scope))
+        .catch(err => console.error('❗ Service Worker failed:', err));
+    }
+
+    // Optional: Install prompt
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      // You could show a custom "Install" button here if you want
+      console.log('💡 PWA install prompt ready');
+    });
+  </script>
+</body>
+</html>
